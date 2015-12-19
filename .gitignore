@@ -1,0 +1,7 @@
+cgi-bin/data
+cgi-bin/parsed_files
+bisqueFULL.tar.gz
+bisqueLite.tar.gz
+cgi-bin/user_info/sql_info.txt
+*.pyc
+*.swo

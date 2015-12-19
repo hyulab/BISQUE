@@ -1,0 +1,7 @@
+input_class: protein
+output_class: protein
+input_id_type: refp
+output_id_type: uniprot
+inputToOutput: parsed_files/refp_uniprot.txt
+inputToSequence: parsed_files/refp_seq.txt
+inputToPosition: None

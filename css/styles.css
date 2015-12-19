@@ -1,0 +1,94 @@
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  font-family: 'Open Sans', sans-serif;
+  /*position: relative;*/
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.dover {
+	height: 100px;
+	overflow: scroll;
+}
+
+.page-header {
+	margin-top: 0;
+}
+
+.page-body {
+	padding-top: 0;
+}
+
+#download_link {
+	padding-top: 30px;
+}
+
+#download_button {
+	height: 70px;
+}
+
+#about_container {
+	margin-top: 300px;
+	margin-bottom: 1000px;
+}
+
+.bordered-button {
+	border-style: solid;
+    border-color: black;
+}
+.form-actions {
+	text-align: center;
+}
+
+#bitbucket_img {
+	margin-top: 10px;
+	height:30px;
+	width:30px;
+}
+
+#install_container {
+	margin-bottom: 50px
+}
+
+#fork_me {
+	height:80px;
+}
+
+
+
+#learn_text {
+	margin-left:150px;
+	margin-right:150px;
+	font-size: 20px;
+}
+
+#alert_container {
+	margin-top: 10px;
+	display: none;
+}
+
+#info_header {
+	padding-top: 60px;
+	padding-bottom: 60px;
+	padding-left: 50px;
+	font-size: 24px
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+#batch_input_row {
+	margin-bottom: 15px
+}
+

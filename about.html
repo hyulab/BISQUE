@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BISQUE</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href = "css/bootstrap.min.css" rel = "stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/toc.css" />
+		<link rel="icon" type="image/png" href="icons_hub/trialLogo.png"/>
+		<!-- Font -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link href = "css/styles.css" rel = "stylesheet"/>
+		<link href = "css/about.css" rel = "stylesheet"/>
+        <link type="text/css" rel="stylesheet" href="bootstrap.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-58905217-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+
+	</head>
+
+	<body data-spy="scroll" data-target="#myScrollSpy">
+	
+		<!--Navbar-->
+		<div class="navbar navbar-inverse" role="navigation" id="navheader">
+			<div class="container-fluid">		
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+      			</button>
+      			<a id="brandLogo" class="navbar-brand" href="index.html"><img src="icons_hub/inverted.png" style="height:20px;opacity:0.4;margin-top:-5px"> BISQUE</a>
+
+      			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		        	<ul class="nav navbar-nav navbar-right">
+		       			<li><a href="index.html">Home</a></li>
+		       			<li class="active"><a href="#">About</a></li>
+		       			<li><a href="download.html">Download</a></li>
+		       			<li><a target='_blank' href="http://www.yulab.org/contact.shtml">Contact</a></li>
+		        	</ul>
+	    		</div>	
+      		</div>		    			
+		</div>
+
+
+		<!--Header-->
+		<div id="info_header" class="container-fluid bg-primary">	
+			<h1 style="font-size:60px">About BISQUE</h1>
+			<div style="opacity: 0.8">
+				<p style="font-size:25px">BISQUE (The <u>Bi</u>ological <u>S</u>e<u>qu</u>ence <u>E</u>xchange) is a bioinformatics tool enabling locus and variant-specific conversion among human gene, transcript, and protein identifiers from several popular databases. BISQUE implements a graph-traversal algorithm to allow conversion between any two database identifiers, including biologically downstream (gene -> transcript -> protein) and upstream conversions (protein -> transcript -> gene). All major functionality of BISQUE is available via this web interface, a URL-based web service, and a downloadable command-line tool, which includes a python module and deployable MySQL database.</p>
+			</div>
+
+		</div>
+		
+		<!-- Webserver -->
+		<div class="container-fluid" id="scrollStart">
+			<div class="col-md-2" id="myScrollSpy">
+				<!-- TABLE OF CONTENTS -->
+				<span id="sidebarHeight"></span>
+				<ul class="nav nav-pills nav-stacked" id="sidebar" style="font-size:16px; padding-right:20px">
+				  <li role="presentation" class="active anav"><a href="#webrow">Webserver</a></li>
+				  <li class="anav" role="presentation"><a href="#comrow">Command Line Tool</a></li>
+				  <li class="anav" role="presentation"><a href="#pyrow">Python Package</a></li>
+				  <li class="anav" role="presentation"><a href="#designRow">BISQUE Design</a></li>
+				  <li class="anav" role="presentation"><a href="#datarow">Data Sources</a></li>
+				</ul>
+				
+			</div>
+			<div class="col-md-8">
+				<div class="row" id="webrow">
+					<div class="page-header"><h1>BISQUE Webserver</h1></div>
+					<h3><div class="page-header"><span style="opacity: 0.8">I: Getting Started</span></div></h3>
+					<p style="font-size:20px">The home page of BISQUE features a form with three fields: identifier, position, and mutation, as shown in the fully-functional example below.</p>
+		
+					<!-- CONVERSION CONTAINER -->
+					<!-- <div class="container" id="form_container" style="margin-top:50px; margin-bottom:15px"> -->
+						<div class="row">
+							<div class="form"> 
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Identifier</label>
+										<input type="text" class="form-control" id="inputId" placeholder="Enter value (e.g, ENST00000258781)">
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+									   <label>Position<span style='opacity:0.5'> (Optional)</span></label>
+									   <input type="text" class="form-control" id="inputPosition" placeholder="Enter position">
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+									   <label>Mutation <span style='opacity:0.5'> (Optional)</span></label>
+									   <input type="text" class="form-control" id="inputMutation" placeholder="Enter mutation (e.g, TA)">
+									</div>
+								</div>
+
+								
+							</div>
+						</div>
+
+						<!-- Alert Container -->
+						<div class="container" id="alert_container" style="text-align: center; width: 50%">
+							<div class="alert alert-danger alert-dismissible fade in" id="input_alert" role="alert">
+								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4><strong>Warning!</strong></h4>
+								<p id="wMessage"></p>
+							</div>
+						</div>
+
+						<!-- CONVERSION BUTTON -->
+						<div class="row">
+							<div class="form-actions">
+								<button type="button" id ="reset_button" data-toggle="tooltip" class="btn btn-lg btn-default">Reset</button>
+								<div class="btn-group" id="convert_button">
+								  <button type="button" style="z-index:0" class="btn btn-lg btn-success dropdown-toggle" data-loading-text="Loading..." data-toggle="dropdown">
+								    Convert To <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu" style="z-index:1000" role="menu">
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('enst')">Ensembl Transcript</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('ensp')">Ensembl Protein</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('ensg')">Ensembl Gene</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('uniprot')">Uniprot Protein</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('reft')">RefSeq Transcript</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('refp')">RefSeq Protein</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('hg38')">GRCh38 Chromosome</a></li>
+								    <li><a style="cursor:pointer" onclick = "loadXMLdoc('dbsnp')">dbSNP</a></li>
+								  </ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- Examples -->
+						<div class="row">
+							<div class="col-md-4"></div>
+							<div class="col-md-4" style="text-align: center; margin-top:15px">
+								<span class="glyphicon glyphicon-arrow-left" style="cursor:pointer" id="exampleGenerator1"></span>
+								<span id="exampleGenerator"style="font-size: 20px; margin-left: 15px; margin-right: 15px; cursor:pointer"><em>examples</em></span>
+								<span class="glyphicon glyphicon-arrow-right" style="cursor:pointer" id="exampleGenerator2"></span>
+							</div>
+
+						</div>
+					<!-- </div> -->
+
+					<div id='ilContainer' style="text-align:center; margin-top:50px; margin-bottom: 100px; display:none">
+					<i class="fa fa-4x fa-refresh fa-spin" style="display: none; margin-left:auto; margin-right:auto" id="inputLoading"></i>
+					</div>
+
+
+		
+					<p style="font-size:20px"><strong>Identifier:</strong> The identifier is the chromosome (i.e. chrX or chr7), gene, transcript, or protein that you wish to convert (for example: an Ensembl transcript or UniProt protein). This is the only required input to perform a conversion with BISQUE.</p>
+					<p style="font-size:20px"><strong>Position:</strong>  You may also indicate a position or locus relative to the provided identifier. Positions for all identifiers (excluding PDB) are 1-indexed, so 1 indicates the first nucleotide in a chromosome, gene, and transcript, and the first amino acid in a protein. Converting an identifier and position can be done without filling in the Mutation field, and will simply indicate the corresponding position relative to your converted identifier. <strong>Important: By default, transcript positions are treated relative to their entire sequences. However, when performing batch queries, the CDS checkbox may be toggled, so that positions are treated relative to the transcript's coding sequence.</strong></p> 
+				    <p style="font-size:20px"><strong>Mutation:</strong> A unique and powerful feature of BISQUE is its ability to convert mutations in the context of one identifier to another. In order to provide a nucleotide mutation (for genomic loci, genes, and transcripts) or an amino acid substitution (for proteins), you must have filled out the Position field as well. Mutations and substitutions should be provided in a two-letter <strong>from-to</strong> format, For example <strong>GC</strong> means a <strong>G</strong> nucleotide is mutated into a <strong>C</strong>.</p>   
+				    <p style="font-size:20px"><strong>Try it yourself!</strong> Click the button to cycle through several sample inputs, and try converting each to any other identifier!</p>
+				    
+
+				 
+					
+
+					<!-- style="margin-top:50px; margin-bottom:50px; margin-left: auto; margin-right: auto" -->
+
+					<h3><div class="page-header"><span style="opacity: 0.8">II: Advanced Features</span></div></h3>
+					<div class="container-fluid">
+							<p style="font-size:20px"><strong>Batch Input</strong></p>
+							<p style="font-size:20px">BISQUE's batch input feature is very useful for quickly converting multiple inputs at once. To access the batch input interface, click the "+" button on the home page, to the right of the position form. Every identifier must be entered in one of a few recognized formats (one being the condensed input format mentioned above). Other acceptable formats for the same query can be found in the batch input instructions on the home page.</br></br>You can also upload and append an entire text file of mutations to the Batch Input text box. Your data file must contain inputs in one of the prescribed formats, with one entry per line.</p> 
+                            <a name="webservice"></a>
+                            <p id="webservice" style="font-size:20px"><strong>Web Service</strong></p>
+							<p style="font-size:20px">BISQUE also supports a URL-based web service, which outputs results in an easy-to-parse plain text format and can be incorporated into scripts. Simply enter <kbd>http://bisque.yulab.org/cgi-bin/run.cgi?id=&#60identifier&#62&output=&#60output type&#62&position=&#60position&#62&mutation=&#60mutation&#62</kbd> into the URL address bar in your web browser. Replace the content in brackets with your own values, and remove the brackets before
+                            executing the query. The only two mandatory options are <strong>id</strong> and <strong>output</strong>. URL queries are outputted in a simple, easily-to-parse format. The output will appear in a plain text format, and each output entry is separated by a line break. The entries themselves appear in the following <em>space-delimited</em> format: <kbd>&#60input identifier&#62 &#60input mutation&#62 &#60input position&#62 &#60output identifier type&#62 &#60output
+                            mutation&#62 &#60output position&#62</kbd>. A list of all valid identifier types for the "output identifier type" entry can be found <a href="#designRow">here</a>.     
+
+							</br></br>All fields which are not relevant to the conversion or could not be mapped (i.e., the mutation field when no mutation was inputted) will appear as "-" instead of being excluded, in order to maintain the format. Please try the following example query to preview the plain text output format. Paste the following into the address bar in your browser: http://bisque.yulab.org/cgi-bin/run.cgi?id=Q8N9Y4&output=enst&position=87&mutation=LQ. You should see output similar to the image below.
+							<img src="img/urlQuery.png" class="img-responsive img-rounded" style="margin-top:50px; margin-bottom:50px; margin-left: auto; margin-right: auto">
+                            </br></br>
+                            The web service also includes usage of the following boolean options: <strong>"canonical", "quality", "swissprot",</strong> and <strong>"cdna"</strong>. These options are triggered when given a value of "y" and are disabled when given a value of "n". For example, adding "canonical=y" to the GET request will filter out any non-canonical identifiers. More detail about all of these options can be found in the command-line application section. In addition, the web service has the "build"
+                            option. If set to "old", the GRCh37 build will be used, while if it is set to "new", then the GRCh38 build will be use. It does use GRCh38 by default, however.
+                            </p>
+
+							<p style="font-size:20px" id="pAccess"><strong>Programmatic Access</strong></p>
+							<p style="font-size:20px">In addition to its web service, BISQUE queries can be computed programmatically. The following two examples demonstrate this feature in both Python and Perl. Keep in mind that the only mandatory parameters are 'id' and 'output'. To exclude mutation or position, simply remove them from the parameter dictionary.</p>
+							<p style="font-size:20px; margin-left:20px"><em><u>Python</u></em></p>
+							<pre style="font-size:20px; margin-left:20px">
+							<p>import urllib,urllib2,json</br></p>
+							<p>url = 'http://bisque.yulab.org/cgi-bin/run.cgi'</br></p>
+							<p>params = {</br>'id': 'ENST00000380618',</br>'output': 'uniprot',</br>'position': '78',</br>'mutation': 'CA'</br>}</p>
+                            <p>data = urllib.urlencode(params)</br>request = urllib2.Request(url, data)</br>response = urllib2.urlopen(request)</br>page = response.read(2000000)</p><p></br>output_data = json.loads(page)</p>
+							</pre>
+
+							<p style="font-size:20px; margin-left:20px; margin-top:20px"><em><u>Perl</u></em></p>
+							<pre style="font-size:20px; margin-left:20px">
+							<p>use strict;</br>use warnings;</br>use LWP::UserAgent;</br></br>my $base = 'http://bisque.yulab.org/cgi-bin/run.cgi';</br></br>my $params = {</br>id => 'O14607',</br>output => 'hg38',</br>position => '98',</br>mutation => 'HD'</br>};</br></br>my $agent = LWP::UserAgent->new(agent => "libwww-perl");</br>push @{$agent->requests_redirectable}, 'POST';</br></br>my $response = $agent->post("$base/", $params);</br></br>while (my $wait = $response->header('Retry-After')) {</br>print STDERR "Waiting ($wait)...\n";</br>sleep $wait;</br>$response = $agent->get($response->base);</br>}</br></br>$response->is_success ?</br>print $response->content :</br>die 'Failed, got ' . $response->status_line .</br>' for ' . $response->request->uri . "\n";</p>
+							</pre>
+					</div>
+				</div>
+
+
+				<div class="row" id="comrow">
+					<div class="page-header" id="testa"><h1>Command Line Tool</h1></div>
+					<div class="page-header"><h3><span style="opacity: 0.8">I: BISQUE Lite vs. BISQUE Full</span></h3></div>
+					<p style="font-size:20px">BISQUE not only functions as a webserver, but it can also be downloaded and installed as a command line tool. There are two different installations: BISQUE Lite and BISQUE Full.</p>
+					<p style="font-size:20px">Both versions of BISQUE include the same core functionality, however BISQUE Full does not require any internet connection, as it stores all data files locally on your computer. This allows for far greater customizability, including the option to add new genomic, proteomic and transcriptomic identifiers to the conversion graph. This will be covered in the advanced section. <em>Note that every feature in the advanced section is reserved for BISQUE Full.</em> 
+					<p style="font-size:20px">BISQUE Lite, is much a much lighter software. The downside is that any computations and conversions require a constant internet connection, as the conversion databases will not be stored locally on your machine.</p>
+					
+
+					<div id="clOptions" class="page-header"><h3><span style="opacity: 0.8">II: Command Line Options</span></h3></div>
+					<p style="font-size:20px">In order to view the command line options,
+					enter <kbd>bisque -h</kbd> into your command line. You should see something similar to the image below. If you are using BISQUE Lite, then not all of these options will be available to you.</p>
+					<img src="img/help.png" class="img-responsive img-rounded" style="margin-top:50px; margin-bottom:50px; margin-left: auto; margin-right: auto">
+					
+					<h4>Full/Lite Options:</h4>
+					<ul style="font-size:20px">
+						<li><kbd>-i</kbd> or <kbd>--input</kbd>: This options allows you to input the identifier you wish to convert. For example, <kbd>-i ENST00000245479</kbd> tells the program to convert this Ensembl Transcript. This option is required.</li>
+						<li><kbd>-t</kbd> or <kbd>--type</kbd>: This option tells BISQUE the type of your identifier. For example, an GRCh38 chromosome has a type "hg38". All identifier types included in BISQUE are found <a href="#designRow">here</a>. This option is almost never necessary, as BISQUE uses regular expression analysis to deduce the types of most common input identifiers. Nevertheless, <kbd>-t ensg</kbd> tells BISQUE that you are converting from an Ensembl Gene identifier.</li>
+						<li><kbd>-o</kbd> or <kbd>--output</kbd>: This options tells BISQUE which identifier type to convert to. Please refer to the <a href="#designRow">full list of identifier types</a>. For example, <kbd>-o ensg</kbd> tells BISQUE to convert to Ensembl Gene. This option is required.</li>
+						<li><kbd>-p</kbd> or <kbd>--position</kbd>: This option indicates a 1-indexed nucleotide or amino acid residue within your inputted identifier.</li>
+						<li><kbd>-m</kbd> or <kbd>--mutation</kbd>: This option allows you to indicate a mutation occurring at the indicated position. For instance, <kbd>-m GA</kbd> tells BISQUE that your inputted identifier has a mutation from G to A. This option is not required, however if it is included you must also include the position of the mutation.</li> 
+						<li><kbd>--swissprot</kbd> (Full Only): Including this options filters out all results which are not, or do not directly map to, a SwissProt UniProt identifier.</li>
+						<li><kbd>--canonical</kbd> (Full Only): Including this options filters out all results which are not, or do not directly map to, a canonical UniProt identifier.</li>
+						<li><kbd>--quality</kbd> (Full Only): Display needle alignment scores of identifiers averaged over all steps of the conversion for which alignments are performed. Requires needle to be installed. Returns -1 if no alignments are performed.</li>
+						<li><kbd>--path</kbd> (Full Only): Including this option displays the path(s) taken when performing a conversion.</li>
+						<li><kbd>--cdna</kbd> (Full Only): Including this options informs BISQUE to treat transcript positions relative to their cDNA sequences. The default is to use their CDS sequences.</li>
+					</ul>
+
+
+					<div class="page-header"><h3><span style="opacity: 0.8">III: Basic Examples</span></h3></div>
+					<p style="font-size:20px">This section will demonstrate some simple conversions using the basic options mentioned in the previous section.<br/><br/></p>
+					<p style="font-size:20px"><strong>Mapping between identifiers:</strong></p>
+					<p style="font-size:20px">The identifier types that come with BISQUE can be found <a href="#designRow">here</a>. Mapping from an instance of one identifier to the other involves a simple input of the following format: <kbd>bisque -i [INSTANCE OF IDENTIFIER TYPE] -o [DESTINATION IDENTIFIER TYPE]</kbd> You may also choose to include the additional option <kbd>-t</kbd>, which tells BISQUE your input identifier type. However, this is only necessary if you are converting from an identifier which was not mentioned as one of BISQUE's identifier types. Here is an example input, which converts from a UniProt protein identifier to the GRCh38 chromosome which it originated from: <kbd>bisque -i P48436 -o hg38</kbd>. Here the <kbd>-t</kbd> option is unnecessary because UniProt is a core type of the BISQUE conversion chart, and can be recognized by regular expression matching.<br/><br/></p> 
+					<p style="font-size:20px"><strong>Mapping between identifiers AND mutation/position pairs:</strong></p>
+					<p style="font-size:20px">BISQUE also allows you to easily attach positions and mutations to your identifier and map those as well. For example, if you want to mutate the first amino acid of KRAS (UniProt P01116) from "M" to "V" to find the exact chromosome, loci, and nucleotide mutations that could have resulted in the mutated protein, you would execute the following command: <kbd>bisque -i P54845 -p 1 -m MV -o hg38</kbd>.</p> 
+				
+
+					<div class="page-header"><h3><span style="opacity: 0.8">IV: Advanced Features (BISQUE Full)</span></h3></div>
+					<p style="font-size:20px"><strong>BISQUE Full Options</strong></p>
+					<p style="font-size:20px">In addition to some options described above, another option available only to BISQUE Full is the versbosity option (<kbd>-v</kbd> or <kbd>--verbosity</kbd>). This has three levels: 0,1,2. This has three levels: 0, 1, and 2. Level 0 verbosity (default) gives no information regarding the calculations used and the nodes traversed in the process of computing a conversion. Level 1 verbosity gives detail about the traversal across the identifier graph to convert your input node to your desired output node. Level 2 verbosity details the path taken through the identifier graph and displays the calculations used to convert mutation and position at each step. Level 2 is primarily used for developer debugging, but can also provide a peek into the inner-workings of BISQUE.</p>
+					<p style="font-size:20px"><strong>Config Options</strong></p>
+					<p style="font-size:20px">Since all data files are stored locally in BISQUE Full, users have much greater freedom for customization through the config.py script located in the root directory of the BISQUE Full download. Run the script by typing <kbd>python config.py -h</kbd> to be presented with the following command line options.</p>
+					<ul style="font-size:20px">
+						<li><kbd>-g</kbd> or <kbd>--graph</kbd>: This options displays your current node identifier graph in a dictionary-like format.</li>
+						<li><kbd>-n</kbd> or <kbd>--new</kbd>: This allows users to add their own identifiers to the identifier graph! Of course, users must provide their own properly formatted data files. The argument for this option is simply the path to your template text file for your new identifier. This file should contain information such as which node you wish to connect your new identifier to, the physical type of the identifier (i.e., chromosome, transcript, protein or gene), as well as directories to all of the data files required to build MySQL tables for this identifier. Please refer to the README in the new_node_example folder of your BISQUE Full download directory for full instructions on how this feature works.</li>
+						<li><kbd>-d</kbd> or <kbd>--delete</kbd>: This option removes an identifier node and all connecting edges from the identifier graph. If another node is left dangling (without any connections in the graph) after the deletion, that node will be deleted as well. The data files and MySQL tables pertaining to the deleted identifier will NOT be removed, however the node and its connections will no longer be traversable during a conversion.</li>
+						<li><kbd>-r</kbd> or <kbd>--reset</kbd>: This option allows you to both rebuild and customize your identifier graphs. Without any arguments <kbd>-r</kbd> will simply reset your identifier graph to the default. Including node types as arguments separated by spaces (E.g, enst ensp uniprot) will rebuild the graph with only those types.</li>
+						<li><kbd>-f</kbd> or <kbd>--factory</kbd>: This option restores the BISQUE Full download to factory settings. In doing so, it removes all unzipped data files, all parsed data files, and all other files created in the installation. It serves primarily a developing purpose by packaging the program for distribution. If you execute this command, you must reinstall BISQUE before using it again.</li>
+
+					</ul>
+				</div>
+
+				<div class="row" id="pyrow">
+					<div class="page-header"><h1>Importable Python Package</h1></div>
+					<p style="font-size:20px">BISQUE can also be used as an importable python module, accessible to both BISQUE Full and Lite users. During installation, you must provide the installer with permission to access your Python path. After installation of either distribution of BISQUE, the package may be imported with the following command: <kbd>import bisque_tools.bisque</kbd>. The primary method used to compute a conversion is <kbd>convert(id, type, output, mutation=None, position=None,all=False,best=False,specific=False)</kbd>. Below is an explanation of each argument.</p>
+					<ul style="font-size:20px">
+						<li><kbd>id</kbd>(String): The identifier value which will be mapped.</li>
+						<li><kbd>type</kbd>(String): The type of the identifier value which will be mapped. The available identifier types are detailed <a href="#designRow">here</a></li>
+						<li><kbd>output</kbd>(String): The type of the desired destination <a href="#designRow">node</a>.</li>
+						<li><kbd>mutation</kbd>(String): The point mutation on your identifier.</li>
+						<li><kbd>position</kbd>(Integer): The 1-indexed position of a specific nucleotide or amino acid on your identifier.</li>
+						<li><kbd>all/best/specific</kbd>(Boolean): Assigning these options to True enables them. More detail on these options can be found <a href="#clOptions">here</a>.</li>
+					</ul>
+					<p style="font-size:20px">This method outputs the final mapping as a dictionary list (there maybe be multiple dictionaries depending on how many outputs they are). Each outputs is represented as a dictionary that gives the position, type, mutation and output value of any given output. For example, <kbd>bisque_tools.bisque.convert(id="ENST00000389354", type="enst", output="uniprot", mutation='AG', position=1)</kbd> returns <kbd>[{'position': 1, 'type': 'uniprot', 'mutation': 'MV', 'value': 'A5PLN7-2'}]</kbd>. This output requires no parsing as it is a native Python data structure.</p>
+				</div>
+
+				
+				<div class="row">
+					<div class="page-header" id="designRow"><h1>BISQUE Design</h1></div>
+					<p style="font-size:20px">BISQUE utilizes a modular node graph design. The image below is a visual representation of this design. This graph reveals all indentifier types contained in BISQUE. Identifier types are strings which are recognized by BISQUE as references to a node in the graph. For example, referencing Ensembl Transcript as either an input or output type would require 'enst' as a reference, in order for BISQUE to know which node to start, or end, on. Examples of this can be found in the above sections.</p>
+						
+					<div class="row">					
+					<div class="col-md-6" style="padding-top:10%">
+						<p style="font-size:20px">The full list of identifier types contained in BISQUE is as follows:</p>
+						<ul style="font-size:20px">
+							<li><kbd>'enst'</kbd>: Reference to Ensembl Transcript</li>
+							<li><kbd>'ensg'</kbd>: Reference to Ensembl Gene</li>
+							<li><kbd>'ensp'</kbd>: Reference to Ensembl Protein</li>
+							<li><kbd>'reft'</kbd>: Reference to RefSeq Transcript</li>
+							<li><kbd>'refp'</kbd>: Reference to RefSeq Protein</li>
+							<li><kbd>'uniprot'</kbd>: Reference to Uniprot Protein</li>
+							<li><kbd>'hg38'</kbd>: Reference to GRCh38 Chromosome</li>
+							<li><kbd>'pdb'</kbd>: Reference to a PDB identifier</li>
+							<li><kbd>'dbsnp'</kbd>: Reference to a dbSNP identifier</li>
+
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<img src="img/graph.png" class="img-responsive img-rounded"></div>
+					</div>
+
+
+					<p style="font-size:20px; margin-top:10%">An example showing the steps for conversion of a genomic variant to UniProt amino acid substitution(s) is shown below by taking a conversion path through Ensembl transcript. The shown genomic variant maps to two Ensembl transcripts, one in the forward direction and one in reverse. BISQUE uses genomic alignments of transcripts from Ensembl's database, removes introns, and codon aligns the result to match amino acids in UniProt proteins.</p>
+
+					<img style="max-width:80%; margin-left:auto; margin-right:auto" src="img/conversionEx.png" class="img-responsive img-rounded">
+				</div>
+
+					
+
+
+				<div class="row" id="datarow" style="margin-bottom:400px">
+					<div class="page-header"><h1>Data Sources</h1></div>
+					<p style="font-size:20px">BISQUE is based off of the latest genome build, GRCh38, and <strong>all data files are updated every six months</strong>. It also supports archived GRCh37 versions of the files below. BISQUE obtains its annotated data files from three different FTP sources:</p>
+					<ul style="font-size:20px">
+						<li><a href="http://www.ensembl.org/index.html" target="_blank">Ensembl</a>: BISQUE parses data files from http://ensembl.org to acquire the following data: internal mappings between all Ensembl gene and transcript identifiers, amino acid and nucleotide sequences for Ensembl identifiers, strand sense (+/-), and the chromosomal positions of all genes and transcripts.</li>
+						<li><a href="http://ncbi.nlm.nih.gov/refseq" target="_blank">RefSeq</a>: From http://ncbi.nlm.nih.gov/refseq, BISQUE parses internal mappings between RefSeq transcripts and proteins, their sequences, and chromosomal positions.</li> 
+						<li><a href="http://www.uniprot.org/" target="_blank">Uniprot</a>: From http://uniprot.org, BISQUE parses sequence mapping files for manually-curated Swiss-Prot, as well as TrEMBL, proteins in the UniProt database. We also parse identifier mapping tables which convert Ensembl and RefSeq identifiers to their corresponding UniProt identifiers.</li>
+					</ul>
+					<div class="page-header"><h3><span style="opacity: 0.8">I: Identifier Mappings</span></h3></div>
+					<ul style="font-size:20px">
+					<li><strong>UniProt x RefSeq Protein</strong>: <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/by_organism/HUMAN_9606_idmapping.dat.gz">HUMAN_9606_idmapping.dat.gz</a> and <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/by_organism/HUMAN_9606_idmapping_selected.dat.gz">HUMAN_9606_idmapping_selected.dat.gz</a></li>
+					<li><strong>UniProt x Ensembl</strong>: <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/uniprot_sprot_human.dat.gz">uniprot_sprot_human.dat.gz</a> and <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/uniprot_trembl_human.dat.gz">uniprot_trembl_human.dat.gz</a></li>
+					<li><strong>UniProt x PDB</strong>: <a href="ftp://ftp.ebi.ac.uk/pub/databases/msd/sifts/split_xml">split_xml</a></li>
+					<li><strong>GRCh38 x dbSNP</strong>: <a href="ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b142_GRCh38/ASN1_flat/">ASN1_flat Directory</a></li>
+					<li><strong>Ensembl Protein x Ensembl Transcript</strong>: <a href='ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.pep.all.fa'>Homo_sapiens.GRCh38.pep.all.fa</a></li>
+					<li><strong>Ensembl Transcript x Ensembl Gene</strong>: <a href='ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.cds.all.fa'>Homo_sapiens.GRCh38.cds.all.fa</a></li>
+					<li><strong>Ensembl x RefSeq</strong>: <a href="ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2ensembl.gz">gene2ensembl.gz</a></li>
+					<li><strong>RefSeq Protein x RefSeq Transcript</strong>: <a href="ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/H_sapiens/protein/protein.gbk.gz">protein.gbk.gz</a></li>
+					<li><strong>Ensembl Identifiers x GRCh38</strong>: <a href='ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.79.gtf.gz'>Homo_sapiens.GRCh38.79.gtf.gz</a></li>
+					</ul>
+
+					<div class="page-header"><h3><span style="opacity: 0.8">II: Sequence Mappings</span></h3></div>
+					<ul style="font-size:20px">
+					<li><strong>UniProt Sequences</strong>: <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/uniprot_sprot_human.dat.gz">uniprot_sprot_human.dat.gz</a> and <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/taxonomic_divisions/uniprot_trembl_human.dat.gz">uniprot_trembl_human.dat.gz</a></li>
+					<li><strong>Ensembl Protein Sequences</strong>: <a href='ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.pep.all.fa'>Homo_sapiens.GRCh38.pep.all.fa</a></li>
+					<li><strong>Ensembl Transcript Sequences</strong>: <a href='ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.cds.all.fa'>Homo_sapiens.GRCh38.cds.all.fa</a></li>
+					<li><strong>RefSeq Protein Sequences</strong>: <a href='ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/H_sapiens/protein/protein.gbk.gz'>protein.gbk.gz</a></li>
+					<li><strong>RefSeq Transcript Sequences</strong>: <a href='ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/H_sapiens/RNA/rna.fa.gz'>rna.fa.gz</a></li>
+					</ul>
+
+
+					<div class="page-header"><h3><span style="opacity: 0.8">III: Chromosomal Position Mappings</span></h3></div>
+					<ul style="font-size:20px">
+					<li><strong>Ensembl Chromosomal Positions</strong>: <a href="ftp://ftp.ensembl.org/pub/current_gtf/homo_sapiens/Homo_sapiens.GRCh38.79.gtf.gz">Homo_sapiens.GRCh38.79.gtf.gz</a></li>
+					<li><strong>RefSeq Transcript Chromosomal Positions</strong>: <a href="ftp://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/H_sapiens/GFF/ref_GRCh38.p2_top_level.gff3.gz">ref_GRCh38.p2_top_level.gff3.gz</a></li>
+					
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		
+
+
+		
+		<!-- Footer -->
+		<footer class="footer" >
+	      <div class="container" style="margin-left: auto; margin-right: auto; text-align: center">
+				<a href="http://wicmb.cornell.edu/" style="text-decoration:none; color:#333" class="pull-left" target="_blank">
+					<img src="icons_hub/cornell_seal.png" style="height:50px">
+					<div style="display:inline-block;vertical-align:middle">
+						<p style="text-align: left; opacity: 0.7; font-size: 15px; margin-top:10px">Cornell University<br/>
+						Weill Institute for Cell and Molecular Biology</p>
+					</div>
+				</a>
+				
+				<a href="http://www.yulab.org/resources.shtml" style="text-decoration:none; color:#333" class="pull-right" target="_blank">
+					<img src="icons_hub/yu_logo.png"  style="height:40px">
+					<div style="display:inline-block;vertical-align:middle">
+						<p style="text-align: left; opacity: 0.7; font-size: 15px; margin-left:10px; margin-top: 10px">Yu Group<br/>Computational Suite</p>
+					</div>
+				</a>
+		</div>
+    	</footer>
+    	
+		<!--Javascript source-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/smooth-scroll.min.js"></script>
+		<script type='text/javascript' src='js/about_animations.js'></script>
+        <script src="js/toc.min.js"></script>
+        <script src="js/spin.min.js"></script>
+        <script src="js/helper.js"></script>
+        <!-- Short script for navbar brandLogo highlighting -->
+        <script>$('#brandLogo').on("mouseenter mouseleave", function(e){
+		if(e.type=="mouseenter"){$('img', this).css("opacity", '1.0');}
+		else if(e.type=="mouseleave"){$('img',this).css("opacity",'0.4')}})</script>
+
+
+
+	</body>
+
+
+</html>

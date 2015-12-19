@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>BISQUE</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href = "css/bootstrap.min.css" rel = "stylesheet">
+		<link rel="icon" type="image/png" href="icons_hub/trialLogo.png"/>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<!-- Font -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link href = "css/styles.css" rel = "stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-58905217-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+	</head>
+
+	<body>
+	
+		<!--Navbar-->
+		<div class="navbar navbar-inverse" role="navigation">
+			<div class="container-fluid">		
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+      			</button>
+      			<a id="brandLogo" class="navbar-brand" href="index.html"><img src="icons_hub/inverted.png" style="height:20px;opacity:0.4;margin-top:-5px"> BISQUE</a>
+      			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		        	<ul class="nav navbar-nav navbar-right">
+		       			<li><a href="index.html">Home</a></li>
+		       			<li><a href="about.html">About</a></li>
+		       			<li class="active"><a href="#">Download</a></li>
+		       			<li><a target='_blank' href="http://www.yulab.org/contact.shtml">Contact</a></li>
+		        	</ul>
+	    		</div>	
+      		</div>		    			
+		</div>
+
+	
+		<!--Header-->
+		<div class="container-fluid">
+			<div class="page-header">
+				<h1>BISQUE Download <small>Command Line Tool and Importable Python Module</h1>
+			</div>
+		</div>
+
+
+		<!--Installation instructions-->
+		<div class="container-fluid">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div class="well">
+					<h2>Installation Instructions</h2>
+					<ol style="font-size:15px">
+						<li>Open your command line</li>
+						<li>Enter the project's root directory using the <kbd>cd</kbd> command</li>
+						<li>Execute the following command: <kbd>python installer.py</kbd></li>
+						<li>Wait 2-5 minutes for installation to complete, and provide any extra information if prompted by the installer</li>
+					</ol>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+		<div class="container-fluid" style="margin-bottom:10%">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div class="container-fluid">
+					<div class="col-md-4">
+						<a style="text-decoration:none" href="bisqueLite.tar.gz" download>
+						<button class="btn btn-block btn-sm btn-success" id="lite" style="height:180px; margin-bottom: 20px">
+							<h2>Bisque Lite</h2>
+							<h4>v1.0</h4>
+							<h3><div class="glyphicon glyphicon-download-alt"></div></h3>
+						</button>
+						</a>
+					</div>
+					<div class="col-md-4">
+						<a href="bisqueFULL.tar.gz" download style="text-decoration:none">
+						<button class="btn btn-block btn-sm btn-info" id="full" style="height:180px; margin-bottom: 20px">
+							<h2>Bisque Full</h2>
+							<h4>v1.0</h4>
+							<h3><div class="glyphicon glyphicon-download-alt"></div></h3>
+						</button>
+						</a>
+					</div>
+					<div class="col-md-4">
+					<a href="https://github.com/hyulab/BISQUE" style="text-decoration:none">
+					<button class="btn btn-block btn-sm btn-danger" id="github" style="height:180px; margin-bottom: 20px">
+						<h2>Fork me!</h2>
+						<h4>Github</h4>
+						<img style="margin-bottom: 5px; height:45px" src="icons_hub/github.png"></div>
+					</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+		</div>
+
+
+
+		<!-- Footer -->
+		<footer class="footer">
+	      <div class="container" style="margin-left: auto; margin-right: auto; text-align: center">
+				<a href="http://wicmb.cornell.edu/" style="text-decoration:none; color:#333" class="pull-left" target="_blank">
+					<img src="icons_hub/cornell_seal.png" style="height:50px">
+					<div style="display:inline-block;vertical-align:middle">
+						<p style="text-align: left; opacity: 0.7; font-size: 15px; margin-top:10px">Cornell University<br/>
+						Weill Institute for Cell and Molecular Biology</p>
+					</div>
+				</a>
+				
+				<a href="http://www.yulab.org/resources.shtml" style="text-decoration:none; color:#333" class="pull-right" target="_blank">
+					<img src="icons_hub/yu_logo.png"  style="height:40px">
+					<div style="display:inline-block;vertical-align:middle">
+						<p style="text-align: left; opacity: 0.7; font-size: 15px; margin-left:10px; margin-top: 10px">Yu Group<br/>Computational Suite</p>
+					</div>
+				</a>
+		</div>
+    	</footer>
+		
+		<!--Javascript source-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/smooth-scroll.js"></script>
+		<script src="js/download_animations.js"></script>
+		<script type="text/javascript" src="/js/tipped/tipped.js"></script>
+		<script type="text/javascript" src="/js/imagesloaded/imagesloaded.pkgd.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/tipped/tipped.css"/>
+		<script src="js/helper.js"></script>
+
+		<script>$('#brandLogo').on("mouseenter mouseleave", function(e){
+		if(e.type=="mouseenter"){$('img', this).css("opacity", '1.0');}
+		else if(e.type=="mouseleave"){$('img',this).css("opacity",'0.4')}})</script>
+
+
+
+	</body>
+
+
+</html>

@@ -1,0 +1,27 @@
+/*CITATION OF THIS CODE: http://www.bootply.com/73864*/
+
+.navbar-form input, .form-inline input {
+  width:auto;
+}
+
+header {
+  height:270px;
+}
+
+@media (min-width: 979px) {
+  #sidebar.affix-top {
+    position: static;
+    margin-top:25px;
+    width:160px;
+  }
+  
+  #sidebar.affix {
+    position: fixed;
+    top:25px;
+    width:160px;
+  }
+}
+
+.affix,.affix-top {
+   position:static;
+}

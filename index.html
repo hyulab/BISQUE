@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .advanced-option {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            white-space: normal;
+            margin-right: 20px;
+        }
+        .advanced-option.left {
+            margin-left: 20px;
+        }
+        .advanced-option.right {
+            margin-right: 20px;
+            font-color: red;
+        }
+    </style>
+	<head>
+		<title>BISQUE</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Font -->
+		<link rel="stylesheet" href="css/jquery.highlighttextarea.min.css">
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+		<link href = "css/bootstrap.min.css" rel = "stylesheet">
+		<link rel="icon" type="image/png" href="icons_hub/trialLogo.png"/>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<link href = "css/styles.css" rel = "stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-58905217-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+
+
+
+		<!-- FILE READER LOGIC -->
+		<!-- FileReader API to read user input text files (for the batch input feature) -->
+		<script>
+			function loadDocument(){
+				if (window.File && window.FileReader && window.FileList && window.Blob) {
+				// This is good. This means FileReader is supported for this browser.
+				} else {
+				  alert('The File APIs are not fully supported in this browser.');
+				}
+
+				var fileInput = document.getElementById('fileInput');
+				var fileDisplayArea = $('#batch_input')
+				fileDisplayArea.val("")
+				var file = fileInput.files[0];
+				var textType = /text.*/;
+
+				if (file.type.match(textType)) {
+					var reader = new FileReader();
+
+					reader.onload = function(e) {
+						fileDisplayArea.val(fileDisplayArea.val() + reader.result);
+						$('#batch_input').trigger("loadFile");
+					}
+
+					reader.readAsText(file);	
+				} else {
+					fileDisplayArea.innerText = "File not supported!"
+				}
+			}
+		</script>
+
+	</head>
+
+	<body>
+
+		<!--Navbar-->
+		<div class="navbar navbar-inverse" role="navigation">
+			<div class="container-fluid">		
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+      			</button>
+      			<a id="brandLogo" class="navbar-brand" href="index.html"><img src="icons_hub/inverted.png" style="height:20px;opacity:0.4;margin-top:-5px"> BISQUE</a>
+
+      			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		        	<ul class="nav navbar-nav navbar-right">
+		       			<li class="active"><a href="index.html">Home</a></li>
+		       			<li><a href="about.html">About</a></li>
+		       			<li><a href="download.html">Download</a></li>
+		       			<li><a target='_blank' href="http://www.yulab.org/contact.shtml">Contact</a></li>
+		        	</ul>
+	    		</div>	
+      		</div>		    			
+		</div>
+
+
+		<!--Jumbotron-->
+		<div class="container" style="padding:0">
+			<div class="jumbotron text-center">
+				<h1 id="welcome" class="jumbotron-header">Welcome to BISQ<img style="height:55px; margin-top:-12px; opacity:0.81" src="icons_hub/trialLogo.png">E</h1>
+				<div id="squash">
+				<p class="jumbotron-text">a human genomic, proteomic, and transcriptomic conversion tool</p>				
+				<a data-scroll href="about.html">
+					<button type="button" class="btn btn-info">
+						Learn More
+					</button>
+				</a>
+				</div>
+				<!-- <div style="margin-top:15px"><img src="icons_hub/trialLogo.png" style="height:50px"></div> -->
+			</div>
+		</div>
+
+
+
+		<!--Conversion form/buttons-->
+		<div class="container single-input" id="form_container" style="padding:0">
+			<div class="row">
+				<div class="form"> 
+					<div class="col-md-4" id="idCol">
+						<div class="form-group">
+							<label>Identifier</label>
+							<input type="text" class="form-control" id="inputId" placeholder="Enter value (e.g, ENST00000258781)">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+						   <label>Position<span style='opacity:0.5'> (Optional)</span></label>
+						   <input type="text" class="form-control" id="inputPosition" placeholder="Enter position">
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+						   <label>Mutation <span style='opacity:0.5'> (Optional)</span></label>
+						   <input type="text" class="form-control" id="inputMutation" placeholder="Enter mutation (e.g, TA)">
+						</div>
+					</div>
+
+					
+
+					<div class="col-md-1" style="margin-top:25px">
+                            <button type="button" class="btn btn-sm btn-default" id="add_id_button">
+                                    <div class="glyphicon glyphicon-plus"></div>
+                            </button>
+                            <p style="opacity:0.8; margin-left:-5px; margin-top:5px">(Batch)</p>
+                    </div>
+
+				</div>
+			</div>
+        </div>
+
+        <div class="container" style="padding-left:40px; padding-right:40px">
+            <u style="margin-left: 5px"><strong>Advanced Options:</strong></u>
+            <div class = "well" style="padding:10px; padding-left:0px; padding-right:0px">
+                <div class = "form-inline" style="margin-bottom: 5px; margin-top: 5px;text-align: center">
+                    <div class="advanced-option left">
+                        <div class="btn-group">
+                          <button style="width:80px" type="button" class="btn btn-sm btn-default dropdown-toggle" data-loading-text="Loading..." data-toggle="dropdown">
+                          <span id="currentBuild">GRCh38</span> <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                                <li><a style="cursor:pointer" onclick="changeBuild('new')">GRCh38 (default)</a></li>
+                                <li><a style="cursor:pointer" onclick="changeBuild('old')">GRCh37</a></li>
+                          </ul>
+                        </div>
+                        <i style="cursor:pointer" id="build_info" class="fa fa-question-circle"></i>
+                        <span style="opacity:0.8; margin-left:5px">Genome Build</span>
+                    </div>
+                    <div class="advanced-option">
+                        <div class="btn-group">
+                          <button style="width:80px" type="button" class="btn btn-sm btn-default dropdown-toggle" data-loading-text="Loading..." data-toggle="dropdown">
+                              <span id="transcript-positions">CDS</span> <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" role="menu">
+                                <li><a style="cursor:pointer" onclick="changePosition('cds')">CDS (default)</a></li>
+                                <li><a style="cursor:pointer" onclick="changePosition('cdna')">cDNA</a></li>
+                          </ul>
+                        </div>
+                        <i style="cursor:pointer" id="cds_info" class="fa fa-question-circle"></i>
+                        <span style="opacity:0.8; margin-left:5px">Transcript Positions</span>
+                    </div>
+                    <div class="advanced-option" >
+                        <div class="checkbox">
+                            <label>
+                                <input id="quality" type="checkbox"> Calculate Alignment Scores 
+                            </label>
+                            <i style="cursor:pointer" id="quality_info" class="fa fa-question-circle"></i>
+                        </div>
+                    </div>
+                    <div class="advanced-option" >
+                        <div class="checkbox">
+                            <label>
+                                <input id="swissprot" type="checkbox"> Swissprot only
+                            </label>
+                            <i style="cursor:pointer" id="swissprot_info" class="fa fa-question-circle"></i>
+                        </div>
+                    </div>
+                    <div class="advanced-option right">
+                        <div class="checkbox">
+                                <label>
+                                    <input id="canonical" type="checkbox"> Canonical only
+                                </label>
+                                <i style="cursor:pointer" id="canonical_info" class="fa fa-question-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+			<!-- Alert Container -->
+			<div class="container" id="alert_container" style="text-align: center; width: 50%">
+				<div class="alert alert-danger alert-dismissible fade in" id="input_alert" role="alert">
+					<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4><strong>Warning!</strong></h4>
+					<p id="wMessage"></p>
+				</div>
+			</div>
+
+
+			<!--  -->
+			<div class="container single-input">
+				<div class="form-actions">
+					<button type="button" id ="reset_button" data-toggle="tooltip" class="btn btn-lg btn-default">Reset</button>
+					<div class="btn-group" id="convert_button">
+					  <button type="button" style="z-index:0" class="btn btn-lg btn-success dropdown-toggle" data-loading-text="Loading..." data-toggle="dropdown">
+					    Convert To <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" style="z-index:1000" role="menu" id="convertMenu">
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('enst')">Ensembl Transcript</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('ensp')">Ensembl Protein</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('ensg')">Ensembl Gene</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('uniprot')">UniProt Protein</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('reft')">RefSeq Transcript</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('refp')">RefSeq Protein</a></li>
+                        <li><a id="chrBuildSingle" style="cursor:pointer" onclick = "loadXMLdoc('hg38')">GRCh38 Chromsome</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('dbsnp')">dbSNP</a></li>
+					    <li><a style="cursor:pointer" onclick = "loadXMLdoc('pdb')">PDB</a></li>
+					  </ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Examples -->
+			<div class="container single-input">
+				<div class="col-md-4"></div>
+				<div class="col-md-4" style="text-align: center; margin-top:15px">
+					<span class="glyphicon glyphicon-arrow-left" style="cursor:pointer" id="exampleGenerator1"></span>
+					<span id="exampleGenerator"style="font-size: 20px; margin-left: 15px; margin-right: 15px; cursor:pointer"><em>examples</em></span>
+					<span class="glyphicon glyphicon-arrow-right" style="cursor:pointer" id="exampleGenerator2"></span>
+				</div>
+
+			</div>
+
+			<!-- LINK TO PROGRAMMATIC ACCESS TUTORIAL -->
+			<div class="container single-input" style="margin-top:50px; text-align: center">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
+					<a href="about.html#pAccess" style="font-size:15px">Programmatic access examples (Perl/Python)</a>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+
+			
+
+		</div>
+
+		<i class="fa fa-4x fa-refresh fa-spin" 
+			style="display: none; color: #bdc3c7; position: fixed; top:40%; left:50%; margin-left:-24px; margin-top:-28px; z-index:200000" id="inputLoading"></i>	
+
+		<button type="button" class="btn btn-danger" id="cancel_query" style="display: none; position:fixed; top:10%; right:10%; z-index:20000"> Cancel Query</button>	
+
+		<!--Batch input container-->
+		<div class="container" style="padding: 0; display:none; margin-bottom:200px" id="batch_input_container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="well" style="overflow: scroll; height:300px" >
+						<h4><strong>Batch Input Instructions</strong></h4>
+						<p>Enter multiple queries (one query per line) each with optionally attached positions and mutations. The standard input format is one, two, or three delimited values:  
+						</p>
+						<ul>
+							<li><kbd>identifier</kbd></li>
+							<li><kbd>identifier locus</kbd></li>
+							<li><kbd>identifier locus mutation</kbd></li>
+						</ul>
+						<p>Recognized delimiters include space, tab, colon, and comma. Examples of other accepted, popular input formats are given below and by clicking on the "Load Example File" button.</p>
+						<ul>
+						<li><kbd>KRAS 98 EV</kbd></li>
+						<li><kbd>KRAS E98V</kbd></li>
+						<li><kbd>KRAS 98 E>V</kbd></li>
+						<li><kbd>KRAS 98E>V</kbd></li>
+						<li><kbd>KRAS p.E98V</kbd></li>
+						<li><kbd>KRAS p.Glu98Val</kbd></li>
+						<li><kbd>ENST00000269305 c.488A>G</kbd></li>
+						<li><kbd>ENST00000269305 g.488A>G</kbd></li>
+						<li><kbd>ENST00000269305 r.488A>G</kbd></li>
+						</ul>
+
+						<p>*Batch Query Limit: Please limit queries to 1000 lines. Conversions to/from dbSNP and GRCh37/38 must include loci information (mutations optional). For larger queries, please use the <a href='http://bisque.yulab.org/about.html#webservice'>web service</a>, or download the <a href='http://bisque.yulab.org/download.html'>BISQUE command line tool.</a></p>
+
+
+					</div>
+				</div>
+				<div class="col-md-4">
+					<textarea wrap="on" style="resize:vertical" class="form-control" rows="13" id="batch_input" placeholder="Upload a file or manually enter your inputs in one or more of the formats listed in the instructions. *Please limit your queries to 1000 lines"></textarea>
+					<div class="row" style="text-align:center; margin-top: 15px; display:none" id="formatContainer"><div id="formValue" class="alert alert-success" role="alert">VCF Format Detected</div></div>
+					<div id="batchError" class="row" style="margin-top: 15px; margin-bottom:200px; display:none; text-align:center"><div class="alert alert-danger" role="alert"></div></div>
+				</div>
+				<div class="col-md-4">
+					<div class="row">
+						<div class="btn-group">
+						  <button type="button" class="btn btn-lg btn-success dropdown-toggle" data-loading-text="Loading..." data-toggle="dropdown">
+						    Convert To <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu">
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('enst')">Ensembl Transcript</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('ensp')">Ensembl Protein</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('ensg')">Ensembl Gene</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('uniprot')">UniProt Protein</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('reft')">RefSeq Transcript</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('refp')">RefSeq Protein</a></li>
+							    <li><a id="chrBuildBatch" style="cursor:pointer" onclick = "loadXMLdocBatch('hg38')">GRCh38 Chromsome</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('dbsnp')">dbSNP</a></li>
+							    <li><a style="cursor:pointer" onclick = "loadXMLdocBatch('pdb')">PDB</a></li>
+						  </ul>
+						</div>
+						<button type="button" class="btn btn-lg btn-default" id="return_button" style="margin-left:10px">
+							Single Input
+						</button>
+					</div>
+					<div class="row">
+						<div class="form-group" style="margin-top: 15px">
+						    <label for="exampleInputFile">Batch File input (optional)</label>
+						    <input type="file" id="fileInput" onchange="loadDocument()">
+						    <p class="help-block">Input your batch input data file here.</p>
+						</div>
+					</div>
+					<div class="row">
+					<button type="submit" class="btn btn-default" id="example_file">Load Example File</span></button>
+					<button type="submit" class="btn btn-default" id="reset_file">Reset</span></button>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div style="text-align:center">
+				<i class="fa fa-4x fa-refresh fa-spin" style="display: none" id="inputLoading2"></i>
+				</div>
+			</div>
+
+		</div>
+
+        <div style="margin-bottom:200px">
+        </div>
+
+		<footer class="footer">
+	      <div class="container" style="margin-left: auto; margin-right: auto; text-align: center">
+				<a href="http://wicmb.cornell.edu/" style="text-decoration:none; color:#333" class="pull-left" target="_blank">
+					<img src="icons_hub/cornell_seal.png" style="height:50px">
+					<div style="display:inline-block;vertical-align:middle">
+						<p style="text-align: left; opacity: 0.7; font-size: 15px; margin-top:10px">Cornell University<br/>
+						Weill Institute for Cell and Molecular Biology</p>
+					</div>
+				</a>
+				
+				<a href="http://www.yulab.org/resources.shtml" style="text-decoration:none; color:#333" class="pull-right" target="_blank">
+					<img src="icons_hub/yu_logo.png"  style="height:40px">
+					<div style="display:inline-block;vertical-align:middle">
+						<p style="text-align: left; opacity: 0.7; font-size: 15px; margin-left:10px; margin-top: 10px">Yu Group<br/>Computational Suite</p>
+					</div>
+				</a>
+		</div>
+    	</footer>
+
+
+		
+		<!--Javascript source-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/smooth-scroll.js"></script>
+		<script type="text/javascript" src="/js/tipped/tipped.js"></script>
+		<script type="text/javascript" src="/js/imagesloaded/imagesloaded.pkgd.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/tipped/tipped.css"/>
+		<script src="js/index_animations.js"></script>
+		<script src="js/spin.min.js"></script>
+		<script src="js/helper.js"></script>
+		<script src="js/jquery.highlighttextarea.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+
+		
+
+	</body>
+
+
+</html>
