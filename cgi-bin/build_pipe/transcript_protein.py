@@ -10,6 +10,8 @@ import needle_wrapper
 import Node
 from Pipe import *
 
+stop_codons = ["TAG", "TAA", "TGA"]
+
 class concretePipe(abstractPipe):
 
     def __init__(self, input_node, out_type, verbosity, cur):
@@ -80,6 +82,9 @@ class concretePipe(abstractPipe):
             self.cur.execute("select seq from %s_seq where %s='%s'"%(self.node.id_type, self.node.id_type, self.node.value))
             rows=self.cur.fetchall();
             inputSequence=rows[0][0]
+            #Remove stop codon from transcript sequence
+            if inputSequence[-3:] in stop_codons:
+                inputSequence = inputSequence[:-3]
             self.cur.execute("select seq from %s_seq where %s='%s'"%(self.out_type, self.out_type, output_value))
             rows=self.cur.fetchall();
             outputSequence=rows[0][0]

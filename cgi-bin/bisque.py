@@ -203,7 +203,7 @@ def traverse_graph(input_node, traversal_list, preserved_pos=None):
 
 #Takes in an identifier id, an identifier type type (core types include: hg19,hg38,enst,ensg,ensp,uniprot), optional mutation, optional position,
 #optional cursor, and optional extra options and outputs a dictionary list
-def convert(id, type, output, mutation=None, position=None, all=False, best=False, path=None, xcds=True, thru=False, swissprot=False, canonical=False, quality=False, cursor=cur, command_line=False):
+def convert(id, type, output, mutation=None, position=None, all=False, best=False, path=None, xcds=False, thru=False, swissprot=False, canonical=False, quality=False, cursor=cur, command_line=False):
     try:
         # Reset globals
         global seen_nodes
@@ -228,7 +228,7 @@ def convert(id, type, output, mutation=None, position=None, all=False, best=Fals
         if type=="pdb" and len(id)>4: type="pdbc"
         #CORRECT VERSION NUMBER
         if type=="reft" or type=="refp": 
-            corrected_id = correct_version_number(id, type)
+            corrected_id = correct_version_number(id, type, cur)
             if corrected_id: id = corrected_id
         #Upper case mutation and accept > format
         if mutation: mutation=mutation.replace(">","").upper();
@@ -342,29 +342,49 @@ def convert(id, type, output, mutation=None, position=None, all=False, best=Fals
                 if result["value"] == "ENST00000504290": print uniprot_results
                 swissprot_satisfied = False
                 canonical_satisfied = False
+                swissprot_canonical_satisfied = False
                 for r in uniprot_results:
                     #Check to see if swissprot
                     if r["source"] == "s": swissprot_satisfied = True
                     #Check to see if canonical
-                    if len(r["value"].split("-")) == 1: canonical_satisfied = True
-                    elif len(r["value"].split("-")) > 1 and int(r["value"].split("-")[-1]) == 1: canonical_satisfied = True
+                    if is_canonical(r["value"]): canonical_satisfied = True
+                    #Check to see if both swissprot and canonical
+                    if r["source"] == "s" and is_canonical(r["value"]): swissprot_canonical_satisfied = True
+                    #if len(r["value"].split("-")) == 1: canonical_satisfied = True
+                    #elif len(r["value"].split("-")) > 1 and int(r["value"].split("-")[-1]) == 1: canonical_satisfied = True
+                    ##Check to see if both
+                    #if r["source"] == "s" and ((len(r["value"].split("-")) == 1) or (len(r["value"].split("-")) > 1 and int(r["value"].split("-")[-1]) == 1))
                 if swissprot and canonical:
-                    if swissprot_satisfied and canonical_satisfied: filtered_results.append(result)
+                    if swissprot_canonical_satisfied: filtered_results.append(result)
                 elif swissprot:
                     if swissprot_satisfied: filtered_results.append(result)
                 elif canonical:
                     if canonical_satisfied: filtered_results.append(result)
                 else:
                     filtered_results.append(result)
-                #filtered_results.append(result)
             clean_results = filtered_results
 
-        #Trim and Correct quality
+        #Trim and Correct Quality
         for result in clean_results:
+            #print result;
             #Change quality to 1.0 if < 0
             if result['quality'] < 0: result['quality'] = 1.0
             #Round quality to 2 decimal places
             result["quality"] = "{0:.3f}".format(result["quality"])
+
+        #If 2 or more results have the same data but different quality, choose only the result with the greatest quality.
+        try:
+            if quality:
+                result_quality = {}
+                for result in clean_results:
+                    unique_result_id = result["value"] + "+" + str(result["position"]) + "+" + str(result["mutation"])
+                    if unique_result_id in result_quality and float(result["quality"]) > result_quality[unique_result_id]["quality"]:
+                        result_quality[unique_result_id]["entry"] = result;
+                    elif unique_result_id not in result_quality:
+                        result_quality[unique_result_id] = {"quality": float(result["quality"]), "entry": result}
+                clean_results = [result_quality[identifier]["entry"] for identifier in result_quality]
+        except:
+            pass
 
 
         #Print results in a way easy for the user to read, but only if executed through command line
@@ -441,6 +461,9 @@ if __name__=="__main__":
     #Normal Handling
     # If no type, parse input to determine type
     if options.type == None: options.type = parse.parse_identifier(options.input, cur)["type"]
+    # If still no type, exit with error
+    if not options.type:
+        sys.exit("The given identifier does not match any BISQUE identifier types.")
     if 'pdb' not in options.type:options.input=options.input.upper();
 
     ###################

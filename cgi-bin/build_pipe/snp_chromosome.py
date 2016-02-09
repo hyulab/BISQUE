@@ -23,7 +23,6 @@ class concretePipe(abstractPipe):
         mutation="%s%s"%(rows[3],rows[4])
         self.node.mutation=mutation;
         #Update wild type field as well
-        print self.node.position
         self.node.wt_source = iops.get_wild_type("chr" + rows[1], self.out_type, int(rows[2]), self.cur)
         results=["chr"+rows[1]];
         return results;

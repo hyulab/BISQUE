@@ -43,6 +43,7 @@ cur=con.cursor();
 data = cgi.FieldStorage()
 output = json.loads(data.getvalue("output"));
 batch = data.getvalue("batch");
+cdna = True if data.getvalue("cdna") == "true" else False
 TRANSCRIPT_THRESHOLD = 6000
 PROTEIN_THRESHOLD = 2000
 
@@ -87,7 +88,7 @@ with con:
                 f = open(os.devnull, 'w');
                 sys.stdout = f;
 
-                results=bisque.convert(id=chrom,type=chrom_type,position=pos,mutation=o["mutation"],output=output_type);
+                results=bisque.convert(id=chrom,type=chrom_type,position=pos,mutation=o["mutation"],output=output_type, xcds=cdna);
                 sys.stdout = old_stdout
                 if not o["source_position"] or not o["source_mutation"]:
                     for result in results:

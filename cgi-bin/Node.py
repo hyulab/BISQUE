@@ -28,7 +28,7 @@ class Node:
 
     # toString override
     def __str__(self):
-        return "ID:%s\tType:%s\tPosition:%s\tMutation:%s"%(self.value,self.id_type,str(self.position),self.mutation);
+        return "ID:%s\tType:%s\tPosition:%s\tMutation:%s\tQuality:%s"%(self.value,self.id_type,str(self.position),self.mutation, str(self.quality));
 
     def set_version_number(v):
         self.version_number=v;

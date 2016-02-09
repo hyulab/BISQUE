@@ -252,9 +252,9 @@ class abstractPipe(object):
                     position_list = self.convert_position(v, verbosity)
                     if verbosity > 1: print "\tOutput Positions: %s" %position_list
                 else:
+                    output_mutations = self.convert_mutation(v, verbosity)
                     position_list = self.convert_position(v, verbosity)
                     if verbosity > 1: print "\tOutput Positions: %s" %position_list
-                    output_mutations = self.convert_mutation(v, verbosity)
                     if verbosity > 1: print "\tOutput Mutations: %s" %output_mutations
 
                 dbsnp_edge=self.node.id_type=="dbsnp" and (self.out_type=="hg38" or self.out_type=="hg19"); #reqs for dbsnp edge case
@@ -286,7 +286,10 @@ class abstractPipe(object):
                 for n in local_node_list:
                     if self.node.quality == -1 or self.node.quality == -2:
                         n.quality = quality
+                    elif n.quality == -1:
+                        n.quality = quality
                     else:
+                        print self.node.value, n.value, self.node.quality
                         n.quality = (self.node.quality + quality) / 2.0
 
             counter+=1

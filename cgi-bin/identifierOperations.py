@@ -6,6 +6,11 @@ import transcriptOperations as tOp
 and any other relevant parameters"""
 comp_dict = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C', 'N':'N'}
 
+#Given an identifier, determine if the identifier is canonical or not
+def is_canonical(id):
+    pure_canonical = len(id.split("-")) == 1
+    impure_canonical = len(id.split("-")) > 1 and int(id.split("-")[-1]) == 1
+    return pure_canonical or impure_canonical
 
 #Given an identifier, return the identifier's wild type
 def get_wild_type(id,type,position,cur,uniprot_pos=None):
@@ -84,7 +89,7 @@ def correctWT(inputId, inputType, position, mutation, cur): #For non-ensg and no
 
 
 #This is only relevant for refSeq identifiers. It returns the correct version number appended to the given id.
-def correct_version_number(id,type):
+def correct_version_number(id,type, cur):
     try:
         if type=="reft":
             cur.execute("select reft from reft_hg38 where reft like '%s.%%'"%(id.split(".")[0]));

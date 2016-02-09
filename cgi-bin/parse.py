@@ -36,7 +36,7 @@ def parse_identifier(id, cur):
         type = "uniprot"
     return {"type": type, "reference": referenceId, "formatted_id": id}
     
-def parse_line(inpt, vcf="false"):
+def parse_line(inpt, vcf=False):
     abbreviationToCode={
             'ala': 'A',
             'arg': 'R',
@@ -62,7 +62,7 @@ def parse_line(inpt, vcf="false"):
     inpt=inpt.strip();
     position=None; mutation=None
 	
-    if vcf == "true":
+    if vcf:
         # CASE A: 
         if inpt=="": return 
         # CASE B: BLANK

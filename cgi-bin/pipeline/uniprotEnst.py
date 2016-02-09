@@ -9,6 +9,8 @@ import needle_wrapper
 import Node
 from Pipe import *
 
+stop_codons = ["TAG", "TAA", "TGA"]
+
 class concretePipe(abstractPipe):
 
     output_positions = []
@@ -24,6 +26,7 @@ class concretePipe(abstractPipe):
         for codon in self.codon_dict:
             if self.codon_dict[codon] == self.node.mutation[0]: possible_wt_codons.append(codon);
             if self.codon_dict[codon] == self.node.mutation[-1]: possible_mut_codons.append(codon);
+        print possible_wt_codons, possible_mut_codons
         cur.execute("select seq from %s_seq where %s = '%s'" %(self.out_type, self.out_type, output_value))
         rows = cur.fetchall()
         if len(rows) == 0:
@@ -43,16 +46,13 @@ class concretePipe(abstractPipe):
             valid_mutations = []
             for c in possible_mut_codons:
                 if c[0] == wt_codon[0] and c[1] == wt_codon[1]:
-                    #if verbosity > 1: print "Succesful output mutation!: %s%s" %(wt_codon[2], c[2])
-                    self.output_positions.append((self.node.position * 3) + 0 )
+                    self.output_positions.append((self.node.position * 3) - 0 )
                     valid_mutations.append("%s%s" %(wt_codon[2], c[2]))
 
                 elif c[1] == wt_codon[1] and c[2] == wt_codon[2]:
-                    #if verbosity > 1: print "Succesful output mutation!: %s%s" %(wt_codon[0], c[0])
                     self.output_positions.append((self.node.position * 3) - 2 )
                     valid_mutations.append("%s%s" %(wt_codon[0], c[0]))
                 elif c[0] == wt_codon[0] and c[2] == wt_codon[2]:
-                    #if verbosity > 1: print "Succesful output mutation!: %s%s" %(wt_codon[1], c[1])
                     self.output_positions.append((self.node.position * 3) - 1)
                     valid_mutations.append("%s%s" %(wt_codon[1], c[1]))
 
@@ -96,6 +96,8 @@ class concretePipe(abstractPipe):
             self.cur.execute("select seq from %s_seq where %s='%s'"%(self.out_type, self.out_type, output_value))
             rows=self.cur.fetchall();
             outputSequence=rows[0][0]
+            if outputSequence[-3:] in stop_codons:
+                outputSequence = outputSequence[:-3]
             #Convert input nucleotide sequence to amino acid sequence
             aa_outputSequence = ""
             for codon in self.split_sequence(outputSequence):

@@ -134,7 +134,8 @@ var fill_input = function(output_data, cur_build, batch){
 	fill_process = $.post(url, {
         output: JSON.stringify(output_data), 
         build: String(cur_build), 
-        batch: String(batch)
+        batch: String(batch),
+        cdna: xcds
     }, function(data){
 		result=data;
 	})
